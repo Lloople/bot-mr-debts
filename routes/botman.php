@@ -1,9 +1,11 @@
 <?php
-use App\Http\Controllers\BotManController;
 
 $botman = resolve('botman');
 
-$botman->hears('Hi', function ($bot) {
+$botman->middleware->received(new \App\Http\Middleware\Botman\LoadUserMiddleware());
+
+$botman->hears('Hi|/hi', function ($bot) {
     $bot->reply('Hello!');
 });
-$botman->hears('Start conversation', BotManController::class.'@startConversation');
+
+$botman->hears("I owe ([0-9]+) to @([^\s]+)", 'App\Http\Controllers\DebtsController@createMe');
