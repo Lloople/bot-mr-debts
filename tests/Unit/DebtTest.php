@@ -16,7 +16,9 @@ class DebtTest extends TestCase
         $debtor = factory(User::class)->create(['name' => 'Debtor']);
         $creditor = factory(User::class)->create(['name' => 'Creditor']);
 
-        $debtor->owes(100)->to($creditor);
+        $debt = $debtor->owes(100)->to($creditor);
+
+        $debt->save();
 
         $this->assertDatabaseHas('debts', [
             'from_id' => $debtor->id,

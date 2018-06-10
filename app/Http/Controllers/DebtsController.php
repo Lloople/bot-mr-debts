@@ -4,20 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use BotMan\BotMan\BotMan;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DebtsController extends Controller
 {
 
     public function createMe(BotMan $bot, $amount, $creditorUsername)
     {
-        try {
-            $creditor = User::findByUsernameOrFail($creditorUsername);
-        } catch (ModelNotFoundException $e) {
+        $creditor = User::where('username', $creditorUsername)->first();
+
+        if (! $creditor) {
             return $bot->reply("Sorry, I don't know who @{$creditorUsername} is.");
         }
 
-        auth()->user()->owes($amount)->to($creditor);
+        if (! auth()->user()->group->users()->find($creditor->id)) {
+            return $bot->reply("You cannot add a debt to @{$creditorUsername} on this group.");
+        }
+
+        $debt = auth()->user()->owes($amount)->to($creditor)->in(auth()->user()->group->id);
+
+        $debt->save();
 
         return $bot->reply('Got it! you shall pay that debt as soon as possible');
     }
