@@ -28,4 +28,14 @@ class IOweTest extends TestCase
             'paid_at' => null
         ]);
     }
+
+    /** @test */
+    public function i_cannot_owe_money_to_a_no_registered_user()
+    {
+        factory(User::class)->create(['telegram_id' => 'han_solo','username' => 'hansolo']);
+
+        $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
+            ->receives('I owe 100 to @jabbathehutt')
+            ->assertReply('Sorry, I don\'t know who @jabbathehutt is.');
+    }
 }
