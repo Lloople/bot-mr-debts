@@ -2,29 +2,23 @@
 
 namespace App\Http\Middleware\Botman;
 
+use App\Models\Group;
 use App\Models\User;
-use App\Services\UserService;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Interfaces\Middleware\Received;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
-use Illuminate\Support\Facades\Hash;
 
 class LoadUserMiddleware implements Received
 {
-
-
-    /**
-     * Handle an incoming message.
-     *
-     * @param IncomingMessage $message
-     * @param callable $next
-     * @param BotMan $bot
-     *
-     * @return mixed
-     */
     public function received(IncomingMessage $message, $next, BotMan $bot)
     {
-        $user = User::findOrCreate($bot->getDriver()->getUser($message));
+        $user = User::findOrCreateTelegram($bot->getDriver()->getUser($message));
+
+        $group = Group::findOrCreateTelegram((object)$message->getPayload()->get('chat'));
+
+        $user->addToGroup($group);
+
+        $user->group = $group;
 
         auth()->login($user);
 
