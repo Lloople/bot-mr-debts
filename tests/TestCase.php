@@ -19,4 +19,15 @@ abstract class TestCase extends BaseTestCase
      * @var BotManTester
      */
     protected $bot;
+
+    public function getGroupPayload()
+    {
+        return collect([
+            'chat' => [
+                'id' => '789',
+                'type' => 'group',
+                'title' => 'Testing Group'
+            ]
+        ]);
+    }
 }

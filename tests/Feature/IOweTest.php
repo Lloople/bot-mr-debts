@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Group;
 use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,11 +15,13 @@ class IOweTest extends TestCase
     public function i_can_owe_money_to_someone()
     {
         $me = factory(User::class)->create(['telegram_id' => 'han_solo','username' => 'hansolo']);
-
         $creditor = factory(User::class)->create(['telegram_id' => 'jabba_the_hutt', 'username' => 'jabbathehutt']);
+        $group = factory(Group::class)->create(['telegram_id' => '789', 'type' => 'group', 'title' => 'Testing Group']);
+
+        $creditor->addToGroup($group);
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
-            ->receives('I owe 100 to @jabbathehutt')
+            ->receives('I owe 100 to @jabbathehutt', $this->getGroupPayload())
             ->assertReply('Got it! you shall pay that debt as soon as possible');
 
         $this->assertDatabaseHas('debts', [
@@ -35,7 +38,7 @@ class IOweTest extends TestCase
         factory(User::class)->create(['telegram_id' => 'han_solo','username' => 'hansolo']);
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
-            ->receives('I owe 100 to @jabbathehutt')
+            ->receives('I owe 100 to @jabbathehutt', $this->getGroupPayload())
             ->assertReply('Sorry, I don\'t know who @jabbathehutt is.');
     }
 }
