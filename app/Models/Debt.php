@@ -17,11 +17,21 @@ class Debt extends Model
         return $this->belongsTo(User::class, 'to_id');
     }
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     public function to($user)
     {
         $this->to_id = $user->id;
 
-        $this->save();
+        return $this;
+    }
+
+    public function in($groupId)
+    {
+        $this->group_id = $groupId;
 
         return $this;
     }

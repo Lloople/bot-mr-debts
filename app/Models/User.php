@@ -3,48 +3,62 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
 
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
+    public function addToGroup($group)
+    {
+        $this->groups()->sync([$group->id], false);
+    }
 
     public static function findByUsernameOrFail($username)
     {
-       $user = self::where('username', $username)->first();
+        $user = self::where('username', $username)->first();
 
-       if (! $user) {
-           throw new ModelNotFoundException('User not found.');
-       }
+        if (! $user) {
+            throw new ModelNotFoundException('User not found.');
+        }
 
-       return $user;
+        return $user;
     }
 
-    public static function findOrCreate($botUser)
+    /**
+     * @param $botUser
+     *
+     * @return \App\Models\User
+     */
+    public static function findOrCreateTelegram($botUser)
     {
-        return self::firstOrCreate(
-            [
-                'telegram_id' => $botUser->getId()
-            ],
-            [
-                'name' => $botUser->getFirstName() ?? $botUser->getId(),
-                'surname' => $botUser->getLastName(),
-                'username' => $botUser->getUsername(),
-                'email' => $botUser->getId().'@money-tracking.com',
-                'password' => Hash::make($botUser->getUsername().'-money-tracking')
-            ]
-        );
+        $user = self::where('telegram_id', $botUser->getId())->first();
+
+        if (! $user) {
+            $user = new self;
+            $user->name = $botUser->getFirstName() ?? $botUser->getId();
+            $user->username = $botUser->getUsername();
+            $user->email = $botUser->getId() . '@money-tracking.com';
+            $user->password = Hash::make($botUser->getUsername() . '-money-tracking');
+            $user->save();
+        }
+
+        return $user;
     }
 
     public function owes($amount)

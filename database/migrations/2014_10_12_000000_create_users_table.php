@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('telegram_id');
-            $table->string('username');
+            $table->string('telegram_id')->nullable();
+            $table->string('username')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
