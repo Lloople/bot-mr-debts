@@ -14,18 +14,20 @@ class Group extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public static function findOrCreateTelegram($botChat)
+    public static function findOrCreateTelegram($chat)
     {
-        $group = self::where('telegram_id', $botChat->id)->first();
+        $group = self::where('telegram_id', $chat['id'])->first();
 
         if (! $group) {
             $group = new self;
-            $group->telegram_id = $botChat->id;
-            $group->title = $botChat->title;
-            $group->type = $botChat->type;
+            $group->telegram_id = $chat['id'];
+            $group->title = $chat['title'];
+            $group->type = $chat['type'];
             $group->save();
         }
 
         return $group;
     }
+
+
 }

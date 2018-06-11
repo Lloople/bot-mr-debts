@@ -29,9 +29,9 @@ class Debt extends Model
         return $this;
     }
 
-    public function in($groupId)
+    public function in($group)
     {
-        $this->group_id = $groupId;
+        $this->group_id = $group->id;
 
         return $this;
     }

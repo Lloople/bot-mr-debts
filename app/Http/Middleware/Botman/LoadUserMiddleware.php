@@ -14,7 +14,7 @@ class LoadUserMiddleware implements Received
     {
         $user = User::findOrCreateTelegram($bot->getDriver()->getUser($message));
 
-        $group = Group::findOrCreateTelegram((object)$message->getPayload()->get('chat'));
+        $group = Group::findOrCreateTelegram($message->getPayload()->get('chat'));
 
         $user->addToGroup($group);
 

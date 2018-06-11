@@ -24,6 +24,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class);
     }
 
+    public function charges()
+    {
+        return $this->hasMany(Debt::class, 'to_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Debt::class, 'from_id');
+    }
+
     public function addToGroup($group)
     {
         $this->groups()->sync([$group->id], false);
@@ -68,5 +78,16 @@ class User extends Authenticatable
         $transaction->amount = $amount;
 
         return $transaction;
+    }
+
+    public function owingTo($creditor, $group = null)
+    {
+        $debts = $this->payments()->where('to_id', $creditor->id);
+
+        if ($group) {
+            $debts->where('group_id', $group->id);
+        }
+
+        return $debts->get();
     }
 }
