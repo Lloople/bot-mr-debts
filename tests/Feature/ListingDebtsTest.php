@@ -30,7 +30,7 @@ class ListingDebtsTest extends TestCase
         $debt2->creditor->addToGroup($group);
 
         $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username])
-            ->receives('/debts', $this->getGroupPayload($group))
+            ->receives('/balance', $this->getGroupPayload($group))
             ->assertReply("You have to pay {$debt2->amount} to @{$debt2->creditor->username}<br>You have to receive {$debt1->amount} from @{$debt1->debtor->username}");
     }
 }

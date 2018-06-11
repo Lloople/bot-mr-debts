@@ -19,7 +19,7 @@ class DebtsController extends Controller
         return $bot->reply($response);
     }
 
-    public function createPayment(BotMan $bot, $amount, $creditorUsername)
+    public function createFromMe(BotMan $bot, $amount, $creditorUsername)
     {
         $debtor = auth()->user();
         $creditor = User::where('username', $creditorUsername)->first();
@@ -40,7 +40,7 @@ class DebtsController extends Controller
         return $bot->reply('Got it! you shall pay that debt as soon as possible');
     }
 
-    public function createCharge(BotMan $bot, $debtorUsername, $amount)
+    public function createFromOthers(BotMan $bot, $debtorUsername, $amount)
     {
         $debtor = User::where('username', $debtorUsername)->first();
         $creditor = auth()->user();
