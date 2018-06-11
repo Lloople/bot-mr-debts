@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+
     use CreatesApplication;
 
     /**
@@ -20,14 +21,12 @@ abstract class TestCase extends BaseTestCase
      */
     protected $bot;
 
-    public function getGroupPayload()
+    public function getGroupPayload($group = null)
     {
         return collect([
-            'chat' => [
-                'id' => '789',
-                'type' => 'group',
-                'title' => 'Testing Group'
-            ]
+            'chat' => $group
+                ? ['id' => $group->telegram_id, 'type' => $group->type, 'title' => $group->title]
+                : ['id' => '789', 'type' => 'group', 'title' => 'Testing Group'],
         ]);
     }
 }
