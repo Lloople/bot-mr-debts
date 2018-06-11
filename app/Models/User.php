@@ -24,14 +24,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class);
     }
 
-    public function charges()
-    {
-        return $this->hasMany(Debt::class, 'to_id');
-    }
-
-    public function payments()
+    public function debts_to_pay()
     {
         return $this->hasMany(Debt::class, 'from_id');
+    }
+
+    public function debts_to_receive()
+    {
+        return $this->hasMany(Debt::class, 'to_id');
     }
 
     public function addToGroup($group)
@@ -82,7 +82,7 @@ class User extends Authenticatable
 
     public function owingTo($creditor, $group = null)
     {
-        $debts = $this->payments()->where('to_id', $creditor->id);
+        $debts = $this->debts_to_pay()->where('to_id', $creditor->id);
 
         if ($group) {
             $debts->where('group_id', $group->id);
