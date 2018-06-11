@@ -8,6 +8,17 @@ use BotMan\BotMan\BotMan;
 class DebtsController extends Controller
 {
 
+    public function index(BotMan $bot)
+    {
+        $user = auth()->user();
+
+        $response = collect($user->debts_to_pay->map->toStringFromDebtor())
+            ->merge($user->debts_to_receive->map->toStringFromCreditor())
+            ->implode('<br>');
+
+        return $bot->reply($response);
+    }
+
     public function createPayment(BotMan $bot, $amount, $creditorUsername)
     {
         $debtor = auth()->user();

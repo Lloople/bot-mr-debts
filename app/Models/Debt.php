@@ -35,4 +35,14 @@ class Debt extends Model
 
         return $this;
     }
+
+    public function toStringFromDebtor()
+    {
+        return "You have to pay {$this->amount} to @{$this->creditor->username}";
+    }
+
+    public function toStringFromCreditor()
+    {
+        return "You have to receive {$this->amount} from @{$this->debtor->username}";
+    }
 }
