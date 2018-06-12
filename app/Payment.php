@@ -38,7 +38,7 @@ class Payment
     {
         $debts = $this->payer->debts_to_pay()
             ->where('to_id', $this->receiver->id)
-            ->where('group_id', $this->group_id)
+            ->where('group_id', $this->group->id)
             ->whereNull('paid_at')
             ->get();
 
@@ -47,8 +47,8 @@ class Payment
                 $debt->amount -= $this->amount;
             }  else {
                 $debt->paid_at = date('Y-m-d H:i:s');
-                $this->amount -= $debt->amount;
             }
+            $this->amount -= $debt->amount;
 
             $debt->save();
 

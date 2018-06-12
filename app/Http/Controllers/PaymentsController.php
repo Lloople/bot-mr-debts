@@ -23,7 +23,9 @@ class PaymentsController extends Controller
 
         $payment = $debtor->pays($amount)->to($creditor)->in($group);
 
-        return $bot->reply('Got it! you shall pay that debt as soon as possible');
+        $payment->save();
+
+        return $bot->reply('Got it!');
     }
 
     public function createFromOthers(BotMan $bot, $debtorUsername, $amount)
