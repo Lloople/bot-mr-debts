@@ -12,11 +12,19 @@ class DebtsController extends Controller
     {
         $user = auth()->user();
 
-        $response = collect($user->debts_to_pay->map->toStringFromDebtor())
-            ->merge($user->debts_to_receive->map->toStringFromCreditor())
-            ->implode('<br>');
+        $debtsToPay = $user->debts_to_pay()->whereNull('paid_at')
+            ->selectRaw('to_id, SUM(amount) as amount')
+            ->groupBy('to_id')
+            ->get()
+            ->map->toStringFromDebtor();
 
-        return $bot->reply($response);
+        $debtsToReceive = $user->debts_to_receive()->whereNull('paid_at')
+            ->selectRaw('from_id, SUM(amount) as amount')
+            ->groupBy('from_id')
+            ->get()
+            ->map->toStringFromCreditor();
+
+        return $bot->reply(collect($debtsToPay)->merge($debtsToReceive)->implode('<br>'));
     }
 
     public function createFromMe(BotMan $bot, $amount, $creditorUsername)

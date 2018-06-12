@@ -22,6 +22,11 @@ class Debt extends Model
         return $this->belongsTo(Group::class);
     }
 
+    public function getAmountFormattedAttribute()
+    {
+        return str_replace(',00', '', number_format($this->amount, 2, ',', '.'));
+    }
+
     public function to($user)
     {
         $this->to_id = $user->id;
@@ -38,11 +43,11 @@ class Debt extends Model
 
     public function toStringFromDebtor()
     {
-        return "You have to pay {$this->amount} to @{$this->creditor->username}";
+        return "You have to pay {$this->amount_formatted} to @{$this->creditor->username}";
     }
 
     public function toStringFromCreditor()
     {
-        return "You have to receive {$this->amount} from @{$this->debtor->username}";
+        return "You have to receive {$this->amount_formatted} from @{$this->debtor->username}";
     }
 }

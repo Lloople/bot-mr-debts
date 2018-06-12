@@ -21,6 +21,8 @@ class ListingDebtsTest extends TestCase
 
         $debt1 = factory(Debt::class)->create(['amount' => 100, 'to_id' => $me->id, 'group_id' => $group->id]);
         $debt2 = factory(Debt::class)->create(['amount' => 102, 'from_id' => $me->id, 'group_id' => $group->id]);
+        $debt3 = factory(Debt::class)->create(['amount' => 8, 'from_id' => $me->id, 'to_id' => $debt2->creditor->id, 'group_id' => $group->id]);
+
 
         $debt1->refresh();
         $debt2->refresh();
@@ -31,6 +33,6 @@ class ListingDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username])
             ->receives('/balance', $this->getGroupPayload($group))
-            ->assertReply("You have to pay {$debt2->amount} to @{$debt2->creditor->username}<br>You have to receive {$debt1->amount} from @{$debt1->debtor->username}");
+            ->assertReply("You have to pay 110 to @{$debt2->creditor->username}<br>You have to receive 100 from @{$debt1->debtor->username}");
     }
 }
