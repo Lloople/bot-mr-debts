@@ -41,9 +41,8 @@ class DebtsController extends Controller
             return $bot->reply("You cannot add a debt to @{$creditorUsername} on this group.");
         }
 
-        $debt = $debtor->owes($amount)->to($creditor)->in($group);
-
-        $debt->save();
+        $payment = $creditor->pays($amount)->to($debtor)->in($group);
+        $payment->save();
 
         return $bot->reply('Got it! you shall pay that debt as soon as possible');
     }
@@ -62,9 +61,9 @@ class DebtsController extends Controller
             return $bot->reply("You cannot add a debt to @{$debtorUsername} on this group.");
         }
 
-        $debt = $debtor->owes($amount)->to($creditor)->in($group);
+        $payment = $creditor->pays($amount)->to($debtor)->in($group);
+        $payment->save();
 
-        $debt->save();
 
         return $bot->reply('Got it!');
     }

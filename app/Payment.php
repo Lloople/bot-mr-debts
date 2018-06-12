@@ -36,18 +36,19 @@ class Payment
 
     public function save()
     {
-        $debts = $this->payer->debts_to_pay()
+        $myDebts = $this->payer->debts_to_pay()
             ->where('to_id', $this->receiver->id)
             ->where('group_id', $this->group->id)
             ->whereNull('paid_at')
             ->get();
 
-        $debts->each(function (Debt $debt) {
+        $myDebts->each(function (Debt $debt) {
             if ($this->amount < $debt->amount) {
                 $debt->amount -= $this->amount;
             }  else {
                 $debt->paid_at = date('Y-m-d H:i:s');
             }
+
             $this->amount -= $debt->amount;
 
             $debt->save();
@@ -57,9 +58,27 @@ class Payment
             }
         });
 
-        if ($this->amount) {
-            $debt = $this->receiver->owes($this->amount)->to($this->payer)->in($this->group);
-            $debt->save();
+        if ($this->amount <= 0) {
+            return;
         }
+
+        $previousDebt = $this->payer->debts_to_receive()
+            ->where('from_id', $this->receiver->id)
+            ->where('group_id', $this->group->id)
+            ->whereNull('paid_at')
+            ->first();
+
+        if ($previousDebt) {
+            $previousDebt->amount += $this->amount;
+            $previousDebt->save();
+            return;
+        }
+
+        $debt = new Debt();
+        $debt->from_id = $this->receiver->id;
+        $debt->to_id = $this->payer->id;
+        $debt->amount = $this->amount;
+        $debt->group_id = $this->group->id;
+        $debt->save();
     }
 }

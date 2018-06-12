@@ -27,20 +27,6 @@ class Debt extends Model
         return str_replace(',00', '', number_format($this->amount, 2, ',', '.'));
     }
 
-    public function to($user)
-    {
-        $this->to_id = $user->id;
-
-        return $this;
-    }
-
-    public function in($group)
-    {
-        $this->group_id = $group->id;
-
-        return $this;
-    }
-
     public function toStringFromDebtor()
     {
         return "You have to pay {$this->amount_formatted} to @{$this->creditor->username}";

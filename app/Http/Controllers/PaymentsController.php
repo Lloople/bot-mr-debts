@@ -30,8 +30,8 @@ class PaymentsController extends Controller
 
     public function createFromOthers(BotMan $bot, $debtorUsername, $amount)
     {
-        $debtor = User::where('username', $debtorUsername)->first();
         $creditor = auth()->user();
+        $debtor = User::where('username', $debtorUsername)->first();
         $group = $creditor->group;
 
         if (! $debtor) {
@@ -39,12 +39,12 @@ class PaymentsController extends Controller
         }
 
         if (! $group->users()->find($debtor->id)) {
-            return $bot->reply("You cannot add a debt to @{$debtorUsername} on this group.");
+            return $bot->reply("@{$debtorUsername} cannot pay you on this group.");
         }
 
-        $debt = $debtor->owes($amount)->to($creditor)->in($group);
+        $payment = $debtor->pays($amount)->to($creditor)->in($group);
 
-        $debt->save();
+        $payment->save();
 
         return $bot->reply('Got it!');
     }

@@ -62,6 +62,7 @@ class User extends Authenticatable
 
         if (! $user) {
             $user = new self;
+            $user->telegram_id = $botUser->getId();
             $user->name = $botUser->getFirstName() ?? $botUser->getId();
             $user->username = $botUser->getUsername();
             $user->email = $botUser->getId() . '@money-tracking.com';
@@ -72,28 +73,8 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function owes($amount)
-    {
-        $transaction = new Debt();
-        $transaction->from_id = $this->id;
-        $transaction->amount = $amount;
-
-        return $transaction;
-    }
-
     public function pays($amount)
     {
         return new Payment($this, $amount);
-    }
-
-    public function owingTo($creditor, $group = null)
-    {
-        $debts = $this->debts_to_pay()->where('to_id', $creditor->id);
-
-        if ($group) {
-            $debts->where('group_id', $group->id);
-        }
-
-        return $debts->get();
     }
 }
