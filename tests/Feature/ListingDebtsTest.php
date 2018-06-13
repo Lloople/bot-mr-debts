@@ -33,6 +33,6 @@ class ListingDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username])
             ->receives('/balance', $this->getGroupPayload($group))
-            ->assertReply("You have to pay 110 to @{$debt2->creditor->username}<br>You have to receive 100 from @{$debt1->debtor->username}");
+            ->assertReply("You have to pay 110 to @{$debt2->creditor->username}".PHP_EOL."You have to receive 100 from @{$debt1->debtor->username}");
     }
 }

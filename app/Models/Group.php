@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
 
+    const UPDATED_AT = null;
+
     protected $guarded = [];
 
     public function users()

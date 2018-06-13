@@ -30,7 +30,6 @@ class CreateDebtsTest extends TestCase
             'from_id' => $me->id,
             'to_id' => $creditor->id,
             'amount' => 100,
-            'paid_at' => null,
         ]);
     }
 
@@ -61,7 +60,6 @@ class CreateDebtsTest extends TestCase
             'from_id' => $creditor->id,
             'to_id' => $me->id,
             'amount' => 100,
-            'paid_at' => null,
         ]);
     }
 

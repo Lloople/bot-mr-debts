@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Debt extends Model
 {
 
+    const UPDATED_AT = null;
+
     public function debtor()
     {
         return $this->belongsTo(User::class, 'from_id');

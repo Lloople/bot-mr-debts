@@ -39,36 +39,32 @@ class CreatePaymentTest extends TestCase
             ->receives('I paid 30 to @jabbathehutt', $this->getGroupPayload($this->group))
             ->assertReply('Got it!');
 
+        $this->assertDatabaseMissing('debts', ['amount' => 30]);
 
-        $this->debt->refresh();
-
-        $this->assertNotNull($this->debt->paid_at);
-
-        $this->assertGreaterThan(now()->subHour(1), $this->debt->paid_at);
-
-        $this->assertDatabaseHas('debts', ['amount' => 5, 'paid_at' => null]);
+        $this->assertDatabaseHas('debts', ['amount' => 5]);
     }
 
     /** @test */
     public function can_pay_a_debt_and_it_creates_another_debt_in_reverse_origin()
     {
+        factory(Debt::class)->create([
+            'from_id' => $this->creditor->id,
+            'to_id' => $this->me->id,
+            'group_id' => $this->group->id,
+            'amount' => 5,
+        ]);
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I paid 40 to @jabbathehutt', $this->getGroupPayload($this->group))
             ->assertReply('Got it!');
 
-        $this->debt->refresh();
-
-        $this->assertNotNull($this->debt->paid_at);
-
-        $this->assertGreaterThan(now()->subHour(1), $this->debt->paid_at);
+        $this->assertDatabaseMissing('debts', ['amount' => 30]);
 
         $this->assertDatabaseHas('debts', [
             'from_id' => $this->creditor->id,
             'to_id' => $this->me->id,
             'group_id' => $this->group->id,
-            'amount' => 10,
-            'paid_at' => null,
+            'amount' => 15,
         ]);
     }
 
@@ -81,8 +77,6 @@ class CreatePaymentTest extends TestCase
             ->assertReply('Got it!');
 
         $this->debt->refresh();
-
-        $this->assertNull($this->debt->paid_at);
 
         $this->assertEquals(2, $this->debt->amount);
     }

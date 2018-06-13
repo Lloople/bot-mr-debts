@@ -18,14 +18,13 @@ class CreateGroupsTable extends Migration
             $table->string('telegram_id');
             $table->string('type');
             $table->string('title');
-            $table->timestamps();
+            $table->timestamp('created_at');
         });
 
         Schema::create('group_user', function (Blueprint $table) {
             $table->increments('id');
             $table->string('group_id');
             $table->string('user_id');
-            $table->timestamps();
         });
     }
 
