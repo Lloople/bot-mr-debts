@@ -6,7 +6,7 @@ use App\Models\Debt;
 use App\Models\Group;
 use App\Models\User;
 
-class Payment
+class PaymentFactory
 {
 
     private $payer;
@@ -36,27 +36,29 @@ class Payment
 
     public function save()
     {
-        $myDebts = $this->payer->debts_to_pay()
+
+        $this->payer->debts_to_pay()
             ->where('to_id', $this->receiver->id)
             ->where('group_id', $this->group->id)
-            ->whereNull('paid_at')
-            ->get();
+            ->get()
+            ->each(function (Debt $debt) {
 
-        $myDebts->each(function (Debt $debt) {
-            if ($this->amount < $debt->amount) {
-                $debt->amount -= $this->amount;
-            }  else {
-                $debt->paid_at = date('Y-m-d H:i:s');
-            }
+                $debtAmount = $debt->amount;
 
-            $this->amount -= $debt->amount;
+                if ($this->amount < $debtAmount) {
+                    $debt->amount -= $this->amount;
+                    $debt->save();
 
-            $debt->save();
+                } else {
+                    $debt->delete();
+                }
 
-            if ($this->amount <= 0) {
-                return false;
-            }
-        });
+                $this->amount -= $debtAmount;
+
+                if ($this->amount <= 0) {
+                    return false;
+                }
+            });
 
         if ($this->amount <= 0) {
             return;
@@ -65,20 +67,17 @@ class Payment
         $previousDebt = $this->payer->debts_to_receive()
             ->where('from_id', $this->receiver->id)
             ->where('group_id', $this->group->id)
-            ->whereNull('paid_at')
             ->first();
 
-        if ($previousDebt) {
-            $previousDebt->amount += $this->amount;
-            $previousDebt->save();
-            return;
+        if (! $previousDebt) {
+            $previousDebt = new Debt();
+            $previousDebt->from_id = $this->receiver->id;
+            $previousDebt->to_id = $this->payer->id;
+            $previousDebt->amount = 0;
+            $previousDebt->group_id = $this->group->id;
         }
 
-        $debt = new Debt();
-        $debt->from_id = $this->receiver->id;
-        $debt->to_id = $this->payer->id;
-        $debt->amount = $this->amount;
-        $debt->group_id = $this->group->id;
-        $debt->save();
+        $previousDebt->amount += $this->amount;
+        $previousDebt->save();
     }
 }

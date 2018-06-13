@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Payment;
+use App\PaymentFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -75,6 +75,6 @@ class User extends Authenticatable
 
     public function pays($amount)
     {
-        return new Payment($this, $amount);
+        return new PaymentFactory($this, $amount);
     }
 }
