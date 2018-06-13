@@ -24,7 +24,7 @@ class DebtsController extends Controller
             ->get()
             ->map->toStringFromCreditor();
 
-        return $bot->reply(collect($debtsToPay)->merge($debtsToReceive)->implode('<br>'));
+        return $bot->reply(collect($debtsToPay)->merge($debtsToReceive)->implode(PHP_EOL));
     }
 
     public function createFromMe(BotMan $bot, $amount, $creditorUsername)
