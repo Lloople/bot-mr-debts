@@ -13,19 +13,15 @@ class PaymentsController extends Controller
         $creditor = User::where('username', $creditorUsername)->first();
         $group = $debtor->group;
 
-        if (! $creditor) {
-            return $bot->reply("Sorry, I don't know who @{$creditorUsername} is.");
-        }
-
-        if (! $group->users()->find($creditor->id)) {
-            return $bot->reply("You cannot pay to @{$creditorUsername} on this group.");
+        if (! $creditor || ! $group->users()->find($creditor->id)) {
+            return $bot->reply(trans('errors.user_not_found', ['username' => $creditorUsername]));
         }
 
         $payment = $debtor->pays($amount)->to($creditor)->in($group);
 
         $payment->save();
 
-        return $bot->reply('Got it!');
+        return $bot->reply(trans('debts.add.payment'));
     }
 
     public function createFromOthers(BotMan $bot, $debtorUsername, $amount)
@@ -34,18 +30,14 @@ class PaymentsController extends Controller
         $debtor = User::where('username', $debtorUsername)->first();
         $group = $creditor->group;
 
-        if (! $debtor) {
-            return $bot->reply("Sorry, I don't know who @{$debtorUsername} is.");
-        }
-
-        if (! $group->users()->find($debtor->id)) {
-            return $bot->reply("@{$debtorUsername} cannot pay you on this group.");
+        if (! $debtor || ! $group->users()->find($debtor->id)) {
+            return $bot->reply(trans('errors.user_not_found', ['username' => $debtorUsername]));
         }
 
         $payment = $debtor->pays($amount)->to($creditor)->in($group);
 
         $payment->save();
 
-        return $bot->reply('Got it!');
+        return $bot->reply(trans('debts.add.payment'));
     }
 }

@@ -24,7 +24,7 @@ class CreateDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I owe 100 to @jabbathehutt', $this->getGroupPayload())
-            ->assertReply('Got it! you shall pay that debt as soon as possible');
+            ->assertReply(trans('debts.add.debt_me'));
 
         $this->assertDatabaseHas('debts', [
             'from_id' => $me->id,
@@ -40,7 +40,7 @@ class CreateDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I owe 100 to @jabbathehutt', $this->getGroupPayload())
-            ->assertReply('Sorry, I don\'t know who @jabbathehutt is.');
+            ->assertReply(trans('errors.user_not_found', ['username' => 'jabbathehutt']));
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class CreateDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => 'jabba_the_hutt', 'username' => 'jabbathehutt'])
             ->receives('@hansolo owes me 100', $this->getGroupPayload())
-            ->assertReply('Got it!');
+            ->assertReply(trans('debts.add.debt_others'));
 
         $this->assertDatabaseHas('debts', [
             'from_id' => $creditor->id,
@@ -70,7 +70,7 @@ class CreateDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => 'jabba_the_hutt', 'username' => 'jabbathehutt'])
             ->receives('@hansolo owes me 100', $this->getGroupPayload())
-            ->assertReply('Sorry, I don\'t know who @hansolo is.');
+            ->assertReply(trans('errors.user_not_found', ['username' => 'hansolo']));
 
     }
 }

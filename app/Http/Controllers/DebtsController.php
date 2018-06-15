@@ -7,9 +7,10 @@ use BotMan\BotMan\BotMan;
 
 class DebtsController extends Controller
 {
-
-    public function index(BotMan $bot)
+    public function index(BotMan $bot, $language)
     {
+        app()->setLocale($language);
+
         $user = auth()->user();
 
         $debtsToPay = $user->debts_to_pay()
@@ -27,44 +28,37 @@ class DebtsController extends Controller
         return $bot->reply(collect($debtsToPay)->merge($debtsToReceive)->implode(PHP_EOL));
     }
 
-    public function createFromMe(BotMan $bot, $amount, $creditorUsername)
+    public function createFromMe(BotMan $bot, $amount, $creditorUsername, $language)
     {
+        app()->setLocale($language);
+
         $debtor = auth()->user();
         $creditor = User::where('username', $creditorUsername)->first();
         $group = $debtor->group;
 
-        if (! $creditor) {
-            return $bot->reply("Sorry, I don't know who @{$creditorUsername} is.");
+        if (! $creditor || ! $group->users()->find($creditor->id)) {
+            return $bot->reply(trans('errors.user_not_found', ['username' => $creditorUsername]));
         }
 
-        if (! $group->users()->find($creditor->id)) {
-            return $bot->reply("You cannot add a debt to @{$creditorUsername} on this group.");
-        }
+        $creditor->pays($amount)->to($debtor)->in($group)->save();
 
-        $payment = $creditor->pays($amount)->to($debtor)->in($group);
-        $payment->save();
-
-        return $bot->reply('Got it! you shall pay that debt as soon as possible');
+        return $bot->reply(trans('debts.add.debt_me'));
     }
 
-    public function createFromOthers(BotMan $bot, $debtorUsername, $amount)
+    public function createFromOthers(BotMan $bot, $debtorUsername, $amount, $language)
     {
+        app()->setLocale($language);
+
         $debtor = User::where('username', $debtorUsername)->first();
         $creditor = auth()->user();
         $group = $creditor->group;
 
-        if (! $debtor) {
-            return $bot->reply("Sorry, I don't know who @{$debtorUsername} is.");
+        if (! $debtor || ! $group->users()->find($debtor->id)) {
+            return $bot->reply(trans('errors.user_not_found', ['username' => $debtorUsername]));
         }
 
-        if (! $group->users()->find($debtor->id)) {
-            return $bot->reply("You cannot add a debt to @{$debtorUsername} on this group.");
-        }
+        $creditor->pays($amount)->to($debtor)->in($group)->save();
 
-        $payment = $creditor->pays($amount)->to($debtor)->in($group);
-        $payment->save();
-
-
-        return $bot->reply('Got it!');
+        return $bot->reply(trans('debts.add.debt_others'));
     }
 }

@@ -31,11 +31,11 @@ class Debt extends Model
 
     public function toStringFromDebtor()
     {
-        return "You have to pay {$this->amount_formatted} to @{$this->creditor->username}";
+        return trans('debts.you_have_to_pay', ['amount' => $this->amount_formatted, 'username' => $this->creditor->username]);
     }
 
     public function toStringFromCreditor()
     {
-        return "You have to receive {$this->amount_formatted} from @{$this->debtor->username}";
+        return trans('debts.you_have_to_receive', ['amount' => $this->amount_formatted, 'username' => $this->debtor->username]);
     }
 }
