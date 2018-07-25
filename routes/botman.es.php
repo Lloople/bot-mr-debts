@@ -1,9 +1,5 @@
 <?php
 
-$botman->hears('Hola|/hola|👋', function ($bot) {
-    $bot->reply('Hola! 👋');
-});
-
 $botman->hears("[le debo|debo] ([0-9]+) a @([^\s]+)", function ($bot, $amount, $username) {
     return app(App\Http\Controllers\DebtsController::class)->createFromMe($bot, $amount, $username, 'es');
 });
