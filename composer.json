@@ -1,11 +1,12 @@
 {
-    "name": "botman/studio",
-    "description": "BotMan Chatbot framework.",
+    "name": "lloople/bot-money-tracking",
+    "description": "Keep track of your friend's debts adding this bot to your telegram group.",
     "keywords": [
         "botman",
         "chatbot",
-        "framework",
-        "laravel"
+        "money",
+        "tracking",
+        "telegram"
     ],
     "license": "MIT",
     "type": "project",
@@ -21,12 +22,12 @@
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
+        "beyondcode/laravel-dump-server": "^1.1",
+        "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0",
-        "filp/whoops": "~2.0",
         "nunomaduro/collision": "~1.1",
-        "symfony/thanks": "^1.0"
+        "phpunit/phpunit": "~6.0"
     },
     "autoload": {
         "classmap": [
