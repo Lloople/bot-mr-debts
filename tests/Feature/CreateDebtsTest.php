@@ -60,6 +60,7 @@ class CreateDebtsTest extends TestCase
             'from_id' => $creditor->id,
             'to_id' => $me->id,
             'amount' => 100,
+            'currency' => 'eur'
         ]);
     }
 

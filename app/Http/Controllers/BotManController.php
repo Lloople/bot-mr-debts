@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use BotMan\BotMan\BotMan;
-use Illuminate\Http\Request;
-use App\Conversations\ExampleConversation;
-
 class BotManController extends Controller
 {
     /**
@@ -24,14 +20,5 @@ class BotManController extends Controller
     public function tinker()
     {
         return view('tinker');
-    }
-
-    /**
-     * Loaded through routes/botman.php
-     * @param  BotMan $bot
-     */
-    public function startConversation(BotMan $bot)
-    {
-        $bot->startConversation(new ExampleConversation());
     }
 }

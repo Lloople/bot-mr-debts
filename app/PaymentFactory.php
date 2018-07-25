@@ -75,6 +75,7 @@ class PaymentFactory
             $previousDebt->to_id = $this->payer->id;
             $previousDebt->amount = 0;
             $previousDebt->group_id = $this->group->id;
+            $previousDebt->currency = $this->group->currency;
         }
 
         $previousDebt->amount += $this->amount;

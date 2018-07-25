@@ -9,6 +9,7 @@ $factory->define(App\Models\Debt::class, function (Faker $faker) {
         'from_id' => factory(User::class)->create(),
         'to_id' => factory(User::class)->create(),
         'group_id' => factory(Group::class)->create(),
-        'amount' => random_int(0, 200)
+        'amount' => random_int(0, 200),
+        'currency' => 'eur'
     ];
 });

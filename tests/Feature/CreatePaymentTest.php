@@ -23,6 +23,8 @@ class CreatePaymentTest extends TestCase
         $this->debt = factory(Debt::class)->create(['from_id' => $this->me->id, 'to_id' => $this->creditor->id, 'group_id' => $this->group->id, 'amount' => 30]);
 
         $this->creditor->addToGroup($this->group);
+
+        app()->setLocale('en');
     }
 
     /** @test */
@@ -41,7 +43,7 @@ class CreatePaymentTest extends TestCase
 
         $this->assertDatabaseMissing('debts', ['amount' => 30]);
 
-        $this->assertDatabaseHas('debts', ['amount' => 5]);
+        $this->assertDatabaseHas('debts', ['amount' => 5, 'currency' => 'eur']);
     }
 
     /** @test */

@@ -25,6 +25,8 @@ class Group extends Model
             $group->telegram_id = $chat['id'];
             $group->title = $chat['title'];
             $group->type = $chat['type'];
+            $group->language = 'es';
+            $group->currency = 'eur';
             $group->save();
         }
 

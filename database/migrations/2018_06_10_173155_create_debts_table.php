@@ -19,6 +19,7 @@ class CreateDebtsTable extends Migration
             $table->string('from_id');
             $table->string('to_id');
             $table->float('amount');
+            $table->string('currency');
             $table->timestamp('created_at');
         });
     }

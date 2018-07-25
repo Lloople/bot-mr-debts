@@ -6,6 +6,8 @@ $factory->define(App\Models\Group::class, function (Faker $faker) {
     return [
         'telegram_id' => $faker->creditCardNumber,
         'type' => 'group',
-        'title' => $faker->jobTitle
+        'title' => $faker->jobTitle,
+        'currency' => 'eur',
+        'language' => 'es'
     ];
 });
