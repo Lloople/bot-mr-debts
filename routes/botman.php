@@ -7,3 +7,5 @@ $botman->middleware->received(new \App\Http\Middleware\Botman\LoadUserMiddleware
 include 'botman.en.php';
 include 'botman.es.php';
 include 'botman.ca.php';
+
+$botman->fallback('App\Http\Controllers\FallbackController@index');
