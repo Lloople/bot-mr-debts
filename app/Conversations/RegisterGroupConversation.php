@@ -12,13 +12,13 @@ class RegisterGroupConversation extends Conversation
 {
 
     private $language;
+    private $currency;
 
     /**
      * Start the conversation
      */
     public function run()
     {
-
         $this->askLanguage();
     }
 
@@ -51,20 +51,18 @@ class RegisterGroupConversation extends Conversation
                 return;
             }
 
+            $this->currency = $answer->getValue();
+
             $this->say(trans('groups.new_group_setted', [
                 'language' => $this->language,
                 'currency' => $this->currency
             ]));
 
-            $groupInformation = $this->bot->getMessage()->getPayload()->get('chat');
-            $group = new Group();
-            $group->telegram_id = $groupInformation['id'];
-            $group->title = $groupInformation['title'];
-            $group->type = $groupInformation['type'];
-            $group->language = $this->language;
-            $group->currency = $this->currency;
-            $group->save();
-
+            Group::createFromChat(
+                collect($this->bot->getMessage()->getPayload())->get('chat'),
+                $this->language,
+                $this->currency
+            );
         });
     }
 

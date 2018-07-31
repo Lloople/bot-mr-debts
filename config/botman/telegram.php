@@ -12,4 +12,9 @@ return [
     |
     */
     'token' => env('TELEGRAM_TOKEN'),
+
+    'bot' => [
+        'id' => env('TELEGRAM_BOT_ID'),
+        'username' => env('TELEGRAM_BOT_USERNAME')
+    ],
 ];
