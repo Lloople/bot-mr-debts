@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a056d6579a898d9c6a2792d54c431d7",
+    "content-hash": "e9dbe6436bea898fae8b94f47b0b8c08",
     "packages": [
         {
             "name": "botman/botman",
@@ -85,16 +85,16 @@
         },
         {
             "name": "botman/driver-telegram",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/botman/driver-telegram.git",
-                "reference": "cba2774c81f5aafa6c7590696c817ea285848d16"
+                "reference": "32ed131c73ee09791e320557340e663d90d7b45d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/botman/driver-telegram/zipball/cba2774c81f5aafa6c7590696c817ea285848d16",
-                "reference": "cba2774c81f5aafa6c7590696c817ea285848d16",
+                "url": "https://api.github.com/repos/botman/driver-telegram/zipball/32ed131c73ee09791e320557340e663d90d7b45d",
+                "reference": "32ed131c73ee09791e320557340e663d90d7b45d",
                 "shasum": ""
             },
             "require": {
@@ -138,7 +138,7 @@
                 "bot",
                 "telegram"
             ],
-            "time": "2018-05-02T07:47:48+00:00"
+            "time": "2018-07-30T20:18:18+00:00"
         },
         {
             "name": "botman/driver-web",
@@ -1159,16 +1159,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.6.28",
+            "version": "v5.6.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "40ba2ee0e61cb4bc3c9f1dab04908e6acf06b86f"
+                "reference": "acc6b5c54ab196d3358f60acc5f55d9ebaaccc02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/40ba2ee0e61cb4bc3c9f1dab04908e6acf06b86f",
-                "reference": "40ba2ee0e61cb4bc3c9f1dab04908e6acf06b86f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/acc6b5c54ab196d3358f60acc5f55d9ebaaccc02",
+                "reference": "acc6b5c54ab196d3358f60acc5f55d9ebaaccc02",
                 "shasum": ""
             },
             "require": {
@@ -1294,7 +1294,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-07-17T14:15:36+00:00"
+            "time": "2018-07-26T16:01:26+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -3466,16 +3466,16 @@
         },
         {
             "name": "tightenco/collect",
-            "version": "v5.6.27",
+            "version": "v5.6.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tightenco/collect.git",
-                "reference": "f80bdbf7e51461467c0103811ca9df2ec0a561d5"
+                "reference": "64f281891ad887451b520ef77574b7a66f7d80e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/collect/zipball/f80bdbf7e51461467c0103811ca9df2ec0a561d5",
-                "reference": "f80bdbf7e51461467c0103811ca9df2ec0a561d5",
+                "url": "https://api.github.com/repos/tightenco/collect/zipball/64f281891ad887451b520ef77574b7a66f7d80e8",
+                "reference": "64f281891ad887451b520ef77574b7a66f7d80e8",
                 "shasum": ""
             },
             "require": {
@@ -3512,7 +3512,7 @@
                 "collection",
                 "laravel"
             ],
-            "time": "2018-07-11T13:31:08+00:00"
+            "time": "2018-07-26T22:33:08+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -3563,16 +3563,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "6ae3e2e6494bb5e58c2decadafc3de7f1453f70a"
+                "reference": "8abb4f9aa89ddea9d52112c65bbe8d0125e2fa8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/6ae3e2e6494bb5e58c2decadafc3de7f1453f70a",
-                "reference": "6ae3e2e6494bb5e58c2decadafc3de7f1453f70a",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/8abb4f9aa89ddea9d52112c65bbe8d0125e2fa8e",
+                "reference": "8abb4f9aa89ddea9d52112c65bbe8d0125e2fa8e",
                 "shasum": ""
             },
             "require": {
@@ -3609,22 +3609,22 @@
                 "env",
                 "environment"
             ],
-            "time": "2018-07-01T10:25:50+00:00"
+            "time": "2018-07-29T20:33:41+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "beyondcode/laravel-dump-server",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beyondcode/laravel-dump-server.git",
-                "reference": "1e9b872de98595d90e411785925eca4e9f2151b6"
+                "reference": "ae2bd1e509897b880168d1506fc3df9ff9535324"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beyondcode/laravel-dump-server/zipball/1e9b872de98595d90e411785925eca4e9f2151b6",
-                "reference": "1e9b872de98595d90e411785925eca4e9f2151b6",
+                "url": "https://api.github.com/repos/beyondcode/laravel-dump-server/zipball/ae2bd1e509897b880168d1506fc3df9ff9535324",
+                "reference": "ae2bd1e509897b880168d1506fc3df9ff9535324",
                 "shasum": ""
             },
             "require": {
@@ -3672,7 +3672,7 @@
                 "beyondcode",
                 "laravel-dump-server"
             ],
-            "time": "2018-07-19T13:18:44+00:00"
+            "time": "2018-07-20T11:01:38+00:00"
         },
         {
             "name": "doctrine/instantiator",
