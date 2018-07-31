@@ -33,5 +33,17 @@ class Group extends Model
         return $group;
     }
 
+    public static function createFromChat($chat, string $language = 'es', string $currency = 'eur')
+    {
+        $group = new self();
+        $group->telegram_id = $chat['id'];
+        $group->title = $chat['title'];
+        $group->type = $chat['type'];
+        $group->language = $language;
+        $group->currency = $currency;
+        $group->save();
+
+        return $group;
+    }
 
 }

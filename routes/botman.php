@@ -8,4 +8,7 @@ include 'botman.en.php';
 include 'botman.es.php';
 include 'botman.ca.php';
 
+$botman->on('group_chat_created', 'App\Http\Controllers\GroupsController@registerNewGroup');
+$botman->on('new_chat_members', 'App\Http\Controllers\GroupsController@registerNewChatMember');
+
 $botman->fallback('App\Http\Controllers\FallbackController@index');
