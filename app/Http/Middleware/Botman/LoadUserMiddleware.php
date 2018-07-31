@@ -10,15 +10,17 @@ use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 
 class LoadUserMiddleware implements Received
 {
+
     public function received(IncomingMessage $message, $next, BotMan $bot)
     {
         $user = User::findOrCreateTelegram($bot->getDriver()->getUser($message));
 
-        $group = Group::findOrCreateTelegram($message->getPayload()->get('chat'));
+        $group = Group::where('telegram_id', collect($message->getPayload())->get('chat')['id'])->first();
 
-        $user->addToGroup($group);
-
-        $user->group = $group;
+        if ($group) {
+            $user->addToGroup($group);
+            $user->group = $group;
+        }
 
         auth()->login($user);
 
