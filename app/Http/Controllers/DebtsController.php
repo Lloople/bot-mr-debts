@@ -14,13 +14,13 @@ class DebtsController extends Controller
         $user = auth()->user();
 
         $debtsToPay = $user->debts_to_pay()
-            ->selectRaw('to_id, SUM(amount) as amount')
+            ->selectRaw('to_id, SUM(amount) as amount, currency')
             ->groupBy('to_id')
             ->get()
             ->map->toStringFromDebtor();
 
         $debtsToReceive = $user->debts_to_receive()
-            ->selectRaw('from_id, SUM(amount) as amount')
+            ->selectRaw('from_id, SUM(amount) as amount, currency')
             ->groupBy('from_id')
             ->get()
             ->map->toStringFromCreditor();

@@ -4,7 +4,6 @@ $botman->hears('Hi|/hi', function ($bot) {
     $bot->reply('Hello! 👋');
 });
 
-// ENGLISH
 $botman->hears("I owe ([0-9]+) to @([^\s]+)", function ($bot, $amount, $username) {
     return app(App\Http\Controllers\DebtsController::class)->createFromMe($bot, $amount, $username, 'en');
 });

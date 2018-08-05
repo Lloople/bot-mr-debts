@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasCurrency;
 
 class Debt extends Model
 {
+
+    use HasCurrency;
 
     const UPDATED_AT = null;
 
@@ -26,7 +29,7 @@ class Debt extends Model
 
     public function getAmountFormattedAttribute()
     {
-        return str_replace(',00', '', number_format($this->amount, 2, ',', '.'));
+        return str_replace(',00', '', number_format($this->amount, 2, ',', '.')) . " {$this->currency_symbol}";
     }
 
     public function toStringFromDebtor()

@@ -7,9 +7,12 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use App\Traits\HasCurrency;
 
 class RegisterGroupConversation extends Conversation
 {
+
+    use HasCurrency;
 
     private $language;
     private $currency;
@@ -24,7 +27,7 @@ class RegisterGroupConversation extends Conversation
 
     public function askLanguage()
     {
-        $this->language = $this->bot->getUser()->getInfo()['language_code'] ?? 'es';
+        $this->language = $this->bot->getUser()->getInfo()['language_code'] ?? app()->getLocale();
 
         app()->setLocale($this->language);
 
@@ -81,10 +84,13 @@ class RegisterGroupConversation extends Conversation
     {
         return Question::create(trans('groups.ask_currency'))
             ->callbackId('ask_currency')
-            ->addButtons([
-                Button::create('€')->value('eur'),
-                Button::create('$')->value('usd'),
-                Button::create('£')->value('gbp'),
-            ]);
+            ->addButtons($this->getCurrenciesAsButtons());
+    }
+
+    private function getCurrenciesAsButtons()
+    {
+        return array_map(function ($symbol, $currency) {
+            return Button::create($symbol)->value($currency);
+        }, $this->currency_symbols);
     }
 }
