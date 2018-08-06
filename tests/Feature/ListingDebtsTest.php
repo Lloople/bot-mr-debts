@@ -23,7 +23,6 @@ class ListingDebtsTest extends TestCase
         $debt2 = factory(Debt::class)->create(['amount' => 102, 'from_id' => $me->id, 'group_id' => $group->id]);
         $debt3 = factory(Debt::class)->create(['amount' => 8, 'from_id' => $me->id, 'to_id' => $debt2->creditor->id, 'group_id' => $group->id]);
 
-
         $debt1->refresh();
         $debt2->refresh();
 
@@ -33,7 +32,7 @@ class ListingDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username])
             ->receives('/balance', $this->getGroupPayload($group))
-            ->assertReply("You have to pay 110 € to @{$debt2->creditor->username}".PHP_EOL."You have to receive 100 € from @{$debt1->debtor->username}");
+            ->assertReply("{$me->name},".PHP_EOL.PHP_EOL."You have to pay 110 € to @{$debt2->creditor->username}".PHP_EOL."You have to receive 100 € from @{$debt1->debtor->username}");
     }
 
     /** @test */
@@ -54,8 +53,8 @@ class ListingDebtsTest extends TestCase
         $debt1->debtor->addToGroup($group);
         $debt2->creditor->addToGroup($group);
 
-        $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username])
+        $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username, 'language_code' =>'es'])
             ->receives('/resumen', $this->getGroupPayload($group))
-            ->assertReply("Debes pagar 110 € a @{$debt2->creditor->username}".PHP_EOL."Debes recibir 100 € de @{$debt1->debtor->username}");
+            ->assertReply("{$me->name},".PHP_EOL.PHP_EOL."Debes pagar 110 € a @{$debt2->creditor->username}".PHP_EOL."Debes recibir 100 € de @{$debt1->debtor->username}");
     }
 }

@@ -15,15 +15,31 @@ class LoadUserMiddleware implements Received
     {
         $user = User::findOrCreateTelegram($bot->getDriver()->getUser($message));
 
+        auth()->login($user);
+
         $group = Group::where('telegram_id', collect($message->getPayload())->get('chat')['id'])->first();
 
         if ($group) {
             $user->addToGroup($group);
+
             $user->group = $group;
+
+        } elseif (! $this->isRegisteringGroup($message)) {
+            $bot->say(trans('groups.first_register'), $message->getRecipient());
+
+            return $message;
+
         }
 
-        auth()->login($user);
-
         return $next($message);
+    }
+
+    private function isRegisteringGroup(IncomingMessage $message)
+    {
+        $payload = collect($message->getPayload());
+
+        return $payload->contains('new_chat_members')
+            || $payload->contains('group_chat_created')
+            || $message->getText() === '/register';
     }
 }

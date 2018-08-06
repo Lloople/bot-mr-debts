@@ -14,7 +14,10 @@ class RegisterGroupConversation extends Conversation
 
     use HasCurrency;
 
+    /** @var string */
     private $language;
+
+    /** @var string */
     private $currency;
 
     /**
@@ -49,7 +52,6 @@ class RegisterGroupConversation extends Conversation
         app()->setLocale($this->language);
 
         return $this->ask($this->getQuestionCurrency(), function (Answer $answer) {
-
             if (! $answer->isInteractiveMessageReply()) {
                 return;
             }
@@ -91,6 +93,6 @@ class RegisterGroupConversation extends Conversation
     {
         return array_map(function ($symbol, $currency) {
             return Button::create($symbol)->value($currency);
-        }, $this->currency_symbols);
+        }, $this->currency_symbols, array_keys($this->currency_symbols));
     }
 }

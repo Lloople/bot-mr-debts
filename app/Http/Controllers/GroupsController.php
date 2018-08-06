@@ -14,7 +14,6 @@ class GroupsController extends Controller
 
     public function registerNewChatMember($payload, BotMan $bot)
     {
-        dump($payload);
         foreach ($payload as $newUser) {
             if ($newUser['is_bot'] && $newUser['id'] === config('telegram.bot.id')) {
                 $bot->startConversation(new RegisterGroupConversation());

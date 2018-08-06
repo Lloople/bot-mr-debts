@@ -36,8 +36,10 @@ class CreateDebtsTest extends TestCase
     /** @test */
     public function i_cannot_owe_money_to_a_no_registered_user()
     {
-        factory(User::class)->create(['telegram_id' => 'han_solo', 'username' => 'hansolo']);
+        $me = factory(User::class)->create(['telegram_id' => 'han_solo', 'username' => 'hansolo']);
+        $group = factory(Group::class)->create(['telegram_id' => '789', 'type' => 'group', 'title' => 'Cantina']);
 
+        $me->addToGroup($group);
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I owe 100 to @jabbathehutt', $this->getGroupPayload())
             ->assertReply(trans('errors.user_not_found', ['username' => 'jabbathehutt']));
@@ -67,8 +69,10 @@ class CreateDebtsTest extends TestCase
     /** @test */
     public function someone_cannot_owe_me_money_if_its_not_registered()
     {
-        factory(User::class)->create(['telegram_id' => 'jabba_the_hutt', 'username' => 'jabbathehutt']);
+        $creditor = factory(User::class)->create(['telegram_id' => 'jabba_the_hutt', 'username' => 'jabbathehutt']);
+        $group = factory(Group::class)->create(['telegram_id' => '789', 'type' => 'group', 'title' => 'Cantina']);
 
+        $creditor->addToGroup($group);
         $this->bot->setUser(['id' => 'jabba_the_hutt', 'username' => 'jabbathehutt'])
             ->receives('@hansolo owes me 100', $this->getGroupPayload())
             ->assertReply(trans('errors.user_not_found', ['username' => 'hansolo']));
