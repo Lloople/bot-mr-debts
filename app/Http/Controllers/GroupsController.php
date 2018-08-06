@@ -7,16 +7,21 @@ use BotMan\BotMan\BotMan;
 
 class GroupsController extends Controller
 {
-    public function registerNewGroup($payload, BotMan $bot)
+    public function register(BotMan $bot)
     {
         $bot->startConversation(new RegisterGroupConversation());
+    }
+
+    public function registerNewGroup($payload, BotMan $bot)
+    {
+        $this->register($bot);
     }
 
     public function registerNewChatMember($payload, BotMan $bot)
     {
         foreach ($payload as $newUser) {
             if ($newUser['is_bot'] && $newUser['id'] === config('telegram.bot.id')) {
-                $bot->startConversation(new RegisterGroupConversation());
+                $this->register($bot);
 
                 return;
             }

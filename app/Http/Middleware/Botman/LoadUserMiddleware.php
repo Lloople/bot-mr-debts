@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\Botman;
 
+use App\Exceptions\MissingGroupException;
 use App\Models\Group;
 use App\Models\User;
 use BotMan\BotMan\BotMan;
@@ -11,6 +12,15 @@ use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 class LoadUserMiddleware implements Received
 {
 
+    /**
+     * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $message
+     * @param callable $next
+     * @param \BotMan\BotMan\BotMan $bot
+     *
+     * @return mixed
+     * @throws \App\Exceptions\MissingGroupException
+     * @throws \BotMan\BotMan\Exceptions\Base\BotManException
+     */
     public function received(IncomingMessage $message, $next, BotMan $bot)
     {
         $user = User::findOrCreateTelegram($bot->getDriver()->getUser($message));
@@ -27,8 +37,7 @@ class LoadUserMiddleware implements Received
         } elseif (! $this->isRegisteringGroup($message)) {
             $bot->say(trans('groups.first_register'), $message->getRecipient());
 
-            return $message;
-
+            throw new MissingGroupException();
         }
 
         return $next($message);
@@ -36,10 +45,12 @@ class LoadUserMiddleware implements Received
 
     private function isRegisteringGroup(IncomingMessage $message)
     {
+        dump($message);
         $payload = collect($message->getPayload());
 
         return $payload->contains('new_chat_members')
             || $payload->contains('group_chat_created')
-            || $message->getText() === '/register';
+            || $message->getText() === '/register'
+            || $payload->get('from')['is_bot'];
     }
 }

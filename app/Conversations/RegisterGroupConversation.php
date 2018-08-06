@@ -15,10 +15,10 @@ class RegisterGroupConversation extends Conversation
     use HasCurrency;
 
     /** @var string */
-    private $language;
+    protected $language;
 
     /** @var string */
-    private $currency;
+    protected $currency;
 
     /**
      * Start the conversation
@@ -58,12 +58,9 @@ class RegisterGroupConversation extends Conversation
 
             $this->currency = $answer->getValue();
 
-            $this->say(trans('groups.new_group_setted', [
-                'language' => $this->language,
-                'currency' => $this->currency
-            ]));
+            $this->say(trans('groups.new_group_setted'));
 
-            Group::createFromChat(
+            $group = Group::createFromChat(
                 collect($this->bot->getMessage()->getPayload())->get('chat'),
                 $this->language,
                 $this->currency

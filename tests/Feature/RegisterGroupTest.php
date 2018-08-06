@@ -31,7 +31,9 @@ class RegisterGroupTest extends TestCase
             ->assertReply(trans('groups.new_group_greetings'))
             ->assertQuestion(trans('groups.ask_language'))
             ->receivesInteractiveMessage('es')
-            ->assertQuestion(trans('groups.ask_currency'));
+            ->assertQuestion(trans('groups.ask_currency'))
+            ->receivesInteractiveMessage('eur')
+            ->assertSay(trans('groups.new_group_setted'));
     }
 
     private function getUserPayload()
