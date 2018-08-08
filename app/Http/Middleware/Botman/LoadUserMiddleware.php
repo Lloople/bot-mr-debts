@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\Botman;
 
+use App\Conversations\RegisterGroupConversation;
 use App\Exceptions\MissingGroupException;
 use App\Models\Group;
 use App\Models\User;
@@ -36,7 +37,7 @@ class LoadUserMiddleware implements Received
 
             app()->setLocale($group->language);
 
-        } elseif (! $this->isRegisteringGroup($message)) {
+        } elseif (! $this->isRegisteringGroup($message, $bot)) {
             $bot->say(trans('groups.first_register'), $message->getRecipient());
 
             throw new MissingGroupException();
@@ -45,14 +46,15 @@ class LoadUserMiddleware implements Received
         return $next($message);
     }
 
-    private function isRegisteringGroup(IncomingMessage $message)
+    private function isRegisteringGroup(IncomingMessage $message, BotMan $bot)
     {
-        dump($message);
         $payload = collect($message->getPayload());
+
+        $conversation = $bot->getStoredConversation($message);
 
         return $payload->contains('new_chat_members')
             || $payload->contains('group_chat_created')
             || $message->getText() === '/register'
-            || $payload->get('from')['is_bot'];
+            || ($conversation && $conversation['conversation'] instanceof RegisterGroupConversation);
     }
 }

@@ -70,10 +70,9 @@ class RegisterGroupConversation extends Conversation
         });
     }
 
-    private function getQuestionLanguage()
+    protected function getQuestionLanguage()
     {
         return Question::create(trans('groups.ask_language'))
-            ->callbackId('ask_language')
             ->addButtons([
                 Button::create('Català')->value('ca'),
                 Button::create('Castellano')->value('es'),
@@ -81,14 +80,13 @@ class RegisterGroupConversation extends Conversation
             ]);
     }
 
-    private function getQuestionCurrency()
+    protected function getQuestionCurrency()
     {
         return Question::create(trans('groups.ask_currency'))
-            ->callbackId('ask_currency')
             ->addButtons($this->getCurrenciesAsButtons());
     }
 
-    private function getCurrenciesAsButtons()
+    protected function getCurrenciesAsButtons()
     {
         return array_map(function ($symbol, $currency) {
             return Button::create($symbol)->value($currency);
