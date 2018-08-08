@@ -60,9 +60,9 @@ class RegisterGroupConversation extends Conversation
 
             $this->currency = $answer->getValue();
 
-            $this->say(trans('groups.new_group_setted'));
+            $this->say(trans('groups.new_group_created'));
 
-            $group = Group::createFromChat(
+            $group = Group::updateOrCreateFromChat(
                 collect($this->bot->getMessage()->getPayload())->get('chat'),
                 $this->language,
                 $this->currency

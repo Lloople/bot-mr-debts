@@ -19,15 +19,16 @@ class Group extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public static function createFromChat($chat, string $language = 'es', string $currency = 'eur')
+    public static function updateOrCreateFromChat($chat, string $language = 'es', string $currency = 'eur')
     {
-        $group = new self();
-        $group->telegram_id = $chat['id'];
-        $group->title = $chat['title'];
-        $group->type = $chat['type'];
-        $group->language = $language;
-        $group->currency = $currency;
-        $group->save();
+        $group = self::updateOrCreate([
+            'telegram_id' => $chat['id'],
+            'type' => $chat['type'],
+        ], [
+            'title' => $chat['title'],
+            'language' => $language,
+            'currency' => $currency,
+        ]);
 
         return $group;
     }
