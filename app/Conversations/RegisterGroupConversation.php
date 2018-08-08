@@ -56,6 +56,8 @@ class RegisterGroupConversation extends Conversation
                 return;
             }
 
+            app()->setLocale($this->language);
+
             $this->currency = $answer->getValue();
 
             $this->say(trans('groups.new_group_setted'));
