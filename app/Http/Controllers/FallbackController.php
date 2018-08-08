@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversations\RegisterGroupConversation;
 use BotMan\BotMan\BotMan;
 
 class FallbackController extends Controller
 {
 
+    const FALLBACK_REPLIES = [
+        'dont_understadd',
+        'sure_write_ok',
+        'use_other_words',
+    ];
+
     public function index(BotMan $bot)
     {
-        $bot->reply('Sorry, I did not understand these commands. Here is a list of commands I understand: ...');
+        return $bot->randomReply($this->getRepliesTranslated());
+    }
+
+    private function getRepliesTranslated()
+    {
+        return collect(self::FALLBACK_REPLIES)->map(function ($key) {
+            return trans('fallback.' . $key);
+        })->toArray();
     }
 }
