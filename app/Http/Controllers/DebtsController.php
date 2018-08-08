@@ -7,10 +7,8 @@ use BotMan\BotMan\BotMan;
 
 class DebtsController extends Controller
 {
-    public function index(BotMan $bot, $language)
+    public function index(BotMan $bot)
     {
-        app()->setLocale($language);
-
         $user = auth()->user();
 
         $debtsToPay = $user->debts_to_pay()
@@ -34,10 +32,8 @@ class DebtsController extends Controller
         return $bot->reply("{$user->name}," . str_repeat(PHP_EOL, 2) . $messageDebts);
     }
 
-    public function createFromMe(BotMan $bot, $amount, $creditorUsername, $language)
+    public function createFromMe(BotMan $bot, $amount, $creditorUsername)
     {
-        app()->setLocale($language);
-
         $debtor = auth()->user();
         $creditor = User::where('username', $creditorUsername)->first();
         $group = $debtor->group;
@@ -51,10 +47,8 @@ class DebtsController extends Controller
         return $bot->reply(trans('debts.add.debt_me'));
     }
 
-    public function createFromOthers(BotMan $bot, $debtorUsername, $amount, $language)
+    public function createFromOthers(BotMan $bot, $debtorUsername, $amount)
     {
-        app()->setLocale($language);
-
         $debtor = User::where('username', $debtorUsername)->first();
         $creditor = auth()->user();
         $group = $creditor->group;

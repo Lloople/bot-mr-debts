@@ -33,7 +33,7 @@ class RegisterGroupTest extends TestCase
             ->receivesInteractiveMessage('es')
             ->assertQuestion(trans('groups.ask_currency'))
             ->receivesInteractiveMessage('eur')
-            ->assertSay(trans('groups.new_group_setted'));
+            ->assertSay(trans('groups.new_group_created'));
     }
 
     private function getUserPayload()

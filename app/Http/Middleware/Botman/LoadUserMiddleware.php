@@ -34,6 +34,8 @@ class LoadUserMiddleware implements Received
 
             $user->group = $group;
 
+            app()->setLocale($group->language);
+
         } elseif (! $this->isRegisteringGroup($message)) {
             $bot->say(trans('groups.first_register'), $message->getRecipient());
 

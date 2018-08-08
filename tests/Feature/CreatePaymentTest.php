@@ -39,7 +39,7 @@ class CreatePaymentTest extends TestCase
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I paid 30 to @jabbathehutt', $this->getGroupPayload($this->group))
-            ->assertReply('Got it!');
+            ->assertReply(trans('debts.add.payment'));
 
         $this->assertDatabaseMissing('debts', ['amount' => 30]);
 
@@ -58,7 +58,7 @@ class CreatePaymentTest extends TestCase
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I paid 40 to @jabbathehutt', $this->getGroupPayload($this->group))
-            ->assertReply('Got it!');
+            ->assertReply(trans('debts.add.payment'));
 
         $this->assertDatabaseMissing('debts', ['amount' => 30]);
 
@@ -76,7 +76,7 @@ class CreatePaymentTest extends TestCase
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
             ->receives('I paid 28 to @jabbathehutt', $this->getGroupPayload($this->group))
-            ->assertReply('Got it!');
+            ->assertReply(trans('debts.add.payment'));
 
         $this->debt->refresh();
 

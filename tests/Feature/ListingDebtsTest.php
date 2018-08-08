@@ -32,7 +32,7 @@ class ListingDebtsTest extends TestCase
 
         $this->bot->setUser(['id' => $me->telegram_id, 'username' => $me->username])
             ->receives('/balance', $this->getGroupPayload($group))
-            ->assertReply("{$me->name},".PHP_EOL.PHP_EOL."You have to pay 110 € to @{$debt2->creditor->username}".PHP_EOL."You have to receive 100 € from @{$debt1->debtor->username}");
+            ->assertReply("{$me->name},".PHP_EOL.PHP_EOL."Debes pagar 110 € a @{$debt2->creditor->username}".PHP_EOL."Debes recibir 100 € de @{$debt1->debtor->username}");
     }
 
     /** @test */
