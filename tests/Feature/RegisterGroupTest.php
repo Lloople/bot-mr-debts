@@ -70,11 +70,11 @@ class RegisterGroupTest extends TestCase
     {
         return [
             [
-                'id' => config('telegram.bot.id'),
+                'id' => config('botman.telegram.bot.id'),
                 'is_bot' => true,
                 'first_name' => 'Bot',
                 'last_name' => 'Money Tracking',
-                'username' => config('telegram.bot.username'),
+                'username' => config('botman.telegram.bot.username'),
                 'language_code' => 'es',
             ],
         ];

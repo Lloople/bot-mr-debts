@@ -20,7 +20,7 @@ class GroupsController extends Controller
     public function registerNewChatMember($payload, BotMan $bot)
     {
         foreach ($payload as $newUser) {
-            if ($newUser['is_bot'] && $newUser['id'] === config('telegram.bot.id')) {
+            if ($newUser['is_bot'] && $newUser['id'] === config('botman.telegram.bot.id')) {
                 $this->register($bot);
 
                 return;
