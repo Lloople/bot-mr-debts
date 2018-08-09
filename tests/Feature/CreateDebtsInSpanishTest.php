@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CreateDebtsInCatalanTest extends TestCase
+class CreateDebtsInSpanishTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -23,7 +23,7 @@ class CreateDebtsInCatalanTest extends TestCase
         $creditor->addToGroup($group);
 
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
-            ->receives('li dec 100 a @jabbathehutt', $this->getGroupPayload())
+            ->receives('le debo 100 a @jabbathehutt', $this->getGroupPayload())
             ->assertReply(trans('debts.add.debt_me'));
 
         $this->assertDatabaseHas('debts', [
@@ -41,7 +41,7 @@ class CreateDebtsInCatalanTest extends TestCase
 
         $me->addToGroup($group);
         $this->bot->setUser(['id' => 'han_solo', 'username' => 'hansolo'])
-            ->receives('li dec 100 a @jabbathehutt', $this->getGroupPayload())
+            ->receives('le debo 100 a @jabbathehutt', $this->getGroupPayload())
             ->assertReply(trans('errors.user_not_found', ['username' => 'jabbathehutt']));
     }
 
@@ -55,7 +55,7 @@ class CreateDebtsInCatalanTest extends TestCase
         $creditor->addToGroup($group);
 
         $this->bot->setUser(['id' => 'jabba_the_hutt', 'username' => 'jabbathehutt'])
-            ->receives('@hansolo em deu 100', $this->getGroupPayload())
+            ->receives('@hansolo me debe 100', $this->getGroupPayload())
             ->assertReply(trans('debts.add.debt_others'));
 
         $this->assertDatabaseHas('debts', [
@@ -74,7 +74,7 @@ class CreateDebtsInCatalanTest extends TestCase
 
         $creditor->addToGroup($group);
         $this->bot->setUser(['id' => 'jabba_the_hutt', 'username' => 'jabbathehutt'])
-            ->receives('@hansolo em deu 100', $this->getGroupPayload())
+            ->receives('@hansolo me debe 100', $this->getGroupPayload())
             ->assertReply(trans('errors.user_not_found', ['username' => 'hansolo']));
 
     }
