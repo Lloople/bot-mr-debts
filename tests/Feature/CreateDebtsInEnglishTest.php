@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CreateDebtsTest extends TestCase
+class CreateDebtsInEnglishTest extends TestCase
 {
 
     use RefreshDatabase;
