@@ -4,6 +4,7 @@ namespace App\Http\Middleware\Botman;
 
 use App\Conversations\RegisterGroupConversation;
 use App\Exceptions\MissingGroupException;
+use App\Exceptions\InteractingWithBotException;
 use App\Models\Group;
 use App\Models\User;
 use BotMan\BotMan\BotMan;
@@ -21,6 +22,7 @@ class LoadUserMiddleware implements Received
      * @return mixed
      * @throws \App\Exceptions\MissingGroupException
      * @throws \BotMan\BotMan\Exceptions\Base\BotManException
+     * @throws \App\Exceptions\InteractingWithBotException
      */
     public function received(IncomingMessage $message, $next, BotMan $bot)
     {
@@ -43,6 +45,12 @@ class LoadUserMiddleware implements Received
             throw new MissingGroupException();
         }
 
+        if (strpos($message->getText(), '@'.config('botman.telegram.bot.username')) !== false) {
+
+            $bot->say(trans('debts.you_cannot_debt_to_bot'), $message->getRecipient());
+
+            throw new InteractingWithBotException();
+        }
         return $next($message);
     }
 
