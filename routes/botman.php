@@ -11,8 +11,8 @@ $botman->hears('Hi|/hi|Hola|👋', function ($bot) {
 $botman->hears(
     implode('|', [
         'en' => 'I owe ([0-9]+) to @([^\s]+)',
-        'ca' => '[li dec|dec] ([0-9]+) a @([^\s]+)',
-        'es' => '[le debo|debo] ([0-9]+) a @([^\s]+)',
+        'ca' => '(?:(?:li dec)|(?:dec)) ([0-9]+) a @([^\s]+)',
+        'es' => '(?:(?:le debo)|(?:debo)) ([0-9]+) a @([^\s]+)',
     ]),
     'App\Http\Controllers\DebtsController@createFromMe'
 );
@@ -20,8 +20,8 @@ $botman->hears(
 $botman->hears(
     implode('|', [
         'en' => '@([^\s]+) owes me ([0-9]+)',
-        'ca' => '@([^\s]+) [em deu|hem deu|deu] ([0-9]+)',
-        'es' => '@([^\s]+) [me debe|debe] ([0-9]+)',
+        'ca' => '@([^\s]+) (?:(?:em deu)|(?:hem deu)|(?:deu)) ([0-9]+)',
+        'es' => '@([^\s]+) (?:(?:me debe)|(?:debe)) ([0-9]+)',
     ]),
     'App\Http\Controllers\DebtsController@createFromOthers'
 );
@@ -29,9 +29,9 @@ $botman->hears(
 
 $botman->hears(
     implode('|', [
-        'en' => 'I paid ([0-9]+) to @([^s]+)',
-        'ca' => '[li he pagat|he pagat|pago] ([0-9]+) a @([^s]+)',
-        'es' => '[le he pagado|le pago|pago|he pagado] ([0-9]+) a @([^s]+)',
+        'en' => 'I paid ([0-9]+) to @([^\s]+)',
+        'ca' => '(?:(?:li he pagat)|(?:he pagat)|(?:pago)) ([0-9]+) a @([^\s]+)',
+        'es' => '(?:(?:le he pagado)|(?:le pago)|(?:he pagado)) ([0-9]+) a @([^\s]+)',
     ]),
     'App\Http\Controllers\PaymentsController@createFromMe'
 );
@@ -39,8 +39,8 @@ $botman->hears(
 $botman->hears(
     implode('|', [
         'en' => '@([^\s]+) paid me ([0-9]+)',
-        'ca' => '@([^\s]+) [m\'ha pagat|ha pagat|em paga] ([0-9]+)',
-        'es' => '@([^\s]+) [me ha pagado|ha pagado|me paga] ([0-9]+)'
+        'ca' => '@([^\s]+) (?:(?:m\'ha pagat)|(?:ha pagat)|(?:em paga)|(?:paga)) ([0-9]+)',
+        'es' => '@([^\s]+) (?:(?:me ha pagado)|(?:ha pagado)|(?:me paga)) ([0-9]+)'
     ]),
     'App\Http\Controllers\PaymentsController@createFromOthers'
 );
