@@ -1,38 +1,32 @@
 <p align="center"><img height="188" width="198" src="https://media.davidllop.com/mr_debts_logo.png"></p>
 
-## About Mr Debts
+## About Me (Mr Debts)
 
 Add me to your group of friends in Telegram to track your debts! 💰
 
 ## How To Use
 
-First of all you need to register your group with this bot, you can do it in 3 different ways:
-- Add this bot to a group
-- Create a group with this bot on the same process
-- Say `/register` to the bot
+First of all you need to register your group with me, you can do it in 3 different ways:
+- Add me to your friends group
+- Create a group with me on the same process
+- Say `/register` to me in an existing group
 
-Then I'll ask you about the language you want to use. Currently supported:
-- English (en)
-- Catalan (ca)
-- Spanish (es)
+Then I'll ask you about the language you want to use. I can work with **English (en)**, **Catalan (ca)** and **Spanish (es)** for now.
 
-Then I'll need to know the currency you want to work on the group. Currently supported:
-- Dollar ($)
-- Euro (€)
-- GBP (£)
+Next step is to know the currency you want to work on the group. Currently supported are **Dollar ($)**, **Euro (€)** and **GBP (£)**
 
 After this process is completed, you can start to debt money to your friends and I'll remember
-all for you. You can tell me like: (currency is optional)
+all for you. You can tell me like:
 
-- `@marcel owes me 200€` 
-- `@christoph paid me 25€`
-- `I paid 300€ to @marcel` (same as `@marcel owes me 300€`)
-- `I owe 10€ to @christoph` (same as `@christoph paid me 10€`)
+- `@marcel owes me 200` 
+- `@christoph paid me 25`
+- `I paid 300 to @marcel` (same as `@marcel owes me 300`)
+- `I owe 10 to @christoph` (same as `@christoph paid me 10`)
 
 You can do it by commands if you feel comfortable:
 
-- `/debt 10 @christoph` (same as `I owe 10€ to @christoph`)
-- `/paid 200 @marcel` (same as `@marcel owes me 200€`)
+- `/debt 10 @christoph` (same as `I owe 10 to @christoph`)
+- `/paid 200 @marcel` (same as `@marcel owes me 200`)
 
 You can see your current balance at every moment using `/balance` or sending the money emoji 💰 or 💵
 
