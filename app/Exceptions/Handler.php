@@ -13,7 +13,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        MissingGroupException::class,
+        PrivateConversationNotAllowedException::class,
     ];
 
     /**
