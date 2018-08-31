@@ -1,18 +1,19 @@
 {
-    "name": "lloople/bot-money-tracking",
+    "name": "lloople/bot-mr-debts",
     "description": "Keep track of your friend's debts adding this bot to your telegram group.",
     "keywords": [
         "botman",
         "chatbot",
         "money",
         "tracking",
-        "telegram"
+        "telegram",
+        "mr debts"
     ],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=7.1.3",
-        "botman/botman": "~2.0",
+        "botman/botman": "^2.4",
         "botman/driver-telegram": "^1.5",
         "botman/driver-web": "~1.0",
         "botman/studio-addons": "~1.2.1",
@@ -27,6 +28,7 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "nunomaduro/collision": "~1.1",
+        "opis/closure": "2.4.1",
         "phpunit/phpunit": "~6.0"
     },
     "autoload": {
