@@ -4,7 +4,7 @@ $botman = resolve('botman');
 
 $botman->middleware->received(new \App\Http\Middleware\Botman\LoadUserMiddleware());
 
-$botman->hears('Hi|/hi|Hola|👋', function ($bot) {
+$botman->hears('hello|/hi|Hola|👋', function ($bot) {
     $bot->reply('Hola! 👋');
 });
 
