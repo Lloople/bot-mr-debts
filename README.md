@@ -42,7 +42,7 @@ You can find the BotMan and BotMan Studio documentation at [http://botman.io](ht
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Mr Debts, please send an e-mail to David Llop at d.lloople@gmail.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Mr Debts, please send an e-mail to David Llop at d.lloople@icloud.com. All security vulnerabilities will be promptly addressed.
 
 ## License
 
